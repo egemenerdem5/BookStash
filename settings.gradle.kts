@@ -5,6 +5,7 @@ pluginManagement {
                 includeGroupByRegex("com\\.android.*")
                 includeGroupByRegex("com\\.google.*")
                 includeGroupByRegex("androidx.*")
+                excludeGroupAndSubgroups("com.google.devtools.ksp")
             }
         }
         mavenCentral()

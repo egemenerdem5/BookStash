@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -30,6 +31,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
+
 }
 
 dependencies {
@@ -41,4 +47,19 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.moshi.kotlin)
+
+    implementation(libs.coroutines.android)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.runtime)
+
+    implementation(libs.coil)
+    implementation(libs.work.runtime)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 }
