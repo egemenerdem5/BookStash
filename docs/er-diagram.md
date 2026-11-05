@@ -11,7 +11,7 @@ erDiagram
         TEXT title "NOT NULL - Book Title"
         TEXT authors "NOT NULL - Comma-separated authors"
         TEXT description "NULL - Book synopsis"
-        TEXT thumbnailUrl "NULL - HTTPS cover image URL"
+        TEXT coverUrl "NULL - HTTPS cover image URL"
         INTEGER pageCount "NOT NULL - Total pages (default 0)"
         INTEGER currentPage "NOT NULL - User reading progress (default 0)"
         TEXT status "NOT NULL - WANT_TO_READ, READING, FINISHED"
