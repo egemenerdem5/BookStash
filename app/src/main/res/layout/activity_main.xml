@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/ledger_paper"
     android:fitsSystemWindows="true"
-    android:paddingTop="24dp"
+    android:paddingTop="16dp"
     tools:context=".MainActivity">
 
     <!-- Top Archival Index Subtitle -->
@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvIndexSubtitle" />
 
-    <!-- 3-Box Ledger Metric Strip (Matches Ekran Alıntısı6) -->
+    <!-- 3-Box Ledger Metric Strip -->
     <LinearLayout
         android:id="@+id/statsStrip"
         android:layout_width="0dp"
@@ -67,6 +67,7 @@
 
         <!-- Stat Box 1: Current Page -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStatPage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
@@ -104,8 +105,9 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Stat Box 2: Active Count / Streak -->
+        <!-- Stat Box 2: Filed Count -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStatStreak"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
@@ -127,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:text="0 BOOKS"
+                    android:text="0 FILED"
                     android:textColor="@color/ledger_ink"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -143,8 +145,9 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Stat Box 3: Year Challenge (7 / 12) -->
+        <!-- Stat Box 3: Year Challenge (Tap to open BOOK CHALLENGE screen!) -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStatChallenge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -152,7 +155,7 @@
             app:cardBackgroundColor="@color/ledger_card_bg"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/ledger_border"
+            app:strokeColor="@color/ledger_accent"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -176,8 +179,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="monospace"
-                    android:text="Year challenge"
-                    android:textColor="@color/ledger_muted"
+                    android:text="Year challenge ↗"
+                    android:textColor="@color/ledger_accent"
                     android:textSize="9sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -209,7 +212,7 @@
             <EditText
                 android:id="@+id/etSearchQuery"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="36dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:fontFamily="monospace"
@@ -219,7 +222,7 @@
                 android:paddingHorizontal="8dp"
                 android:textColor="@color/ledger_ink"
                 android:textColorHint="@color/ledger_muted"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/btnSearch"
@@ -228,7 +231,7 @@
                 android:background="@color/ledger_accent"
                 android:fontFamily="monospace"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
+                android:paddingVertical="7dp"
                 android:text="FIND"
                 android:textColor="@color/white"
                 android:textSize="11sp"
@@ -236,7 +239,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Mode Switch Strip: SHELF vs CATALOG -->
+    <!-- Mode Switch Strip: SHELF vs CATALOG vs CHALLENGE -->
     <LinearLayout
         android:id="@+id/tabContainer"
         android:layout_width="0dp"
@@ -252,22 +255,22 @@
             android:id="@+id/btnShowLibrary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="3dp"
             android:layout_weight="1"
             android:background="@color/ledger_ink"
             android:fontFamily="monospace"
             android:gravity="center"
             android:paddingVertical="7dp"
-            android:text="INDEX SHELF (0)"
+            android:text="SHELF (0)"
             android:textColor="@color/ledger_paper"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/btnShowSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginHorizontal="3dp"
             android:layout_weight="1"
             android:background="@color/ledger_border"
             android:fontFamily="monospace"
@@ -275,7 +278,95 @@
             android:paddingVertical="7dp"
             android:text="API CATALOG"
             android:textColor="@color/ledger_ink"
-            android:textSize="11sp"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnShowChallenge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_border"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="7dp"
+            android:text="CHALLENGE"
+            android:textColor="@color/ledger_ink"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Library Status Filter Tabs (Row 7 of Notion Task List: All / Reading / Queued / Filed) -->
+    <LinearLayout
+        android:id="@+id/statusFilterContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabContainer">
+
+        <TextView
+            android:id="@+id/chipAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_accent"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="ALL"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/chipReading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_card_bg"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="READING"
+            android:textColor="@color/ledger_ink"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/chipWishlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_card_bg"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="QUEUED"
+            android:textColor="@color/ledger_ink"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/chipFinished"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_card_bg"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="FILED"
+            android:textColor="@color/ledger_ink"
+            android:textSize="9sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -291,7 +382,200 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
+
+    <!-- BOOK CHALLENGE VIEW (Matches Ekran Alıntısı4_2.jpg!) -->
+    <ScrollView
+        android:id="@+id/challengeContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <!-- Top Dial & Big Ratio Row (7 / 12 • 58.3%) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_ink"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <!-- Circular Stamp Dial -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"
+                        app:cardBackgroundColor="@color/ledger_paper"
+                        app:cardCornerRadius="52dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/ledger_ink"
+                        app:strokeWidth="2dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="monospace"
+                                android:text="2026 INDEX"
+                                android:textColor="@color/ledger_muted"
+                                android:textSize="8sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="monospace"
+                                android:gravity="center"
+                                android:text="BOOK\nLEDGER"
+                                android:textColor="@color/ledger_ink"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvChallengeBigFraction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="0 / 12"
+                            android:textColor="@color/ledger_ink"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvChallengePercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="monospace"
+                            android:text="0.0%"
+                            android:textColor="@color/ledger_accent"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="monospace"
+                            android:text="ONE TICK PER BOOK\nFILED IN ROOM DB"
+                            android:textColor="@color/ledger_muted"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 12-Book Visual Grid Container (2 rows x 6 slots like Ekran Alıntısı4_2.jpg) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_ink"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:id="@+id/bookGrid12Container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Synced Finish Banner -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@color/ledger_accent"
+                        android:fontFamily="monospace"
+                        android:gravity="center"
+                        android:text="+1"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvLatestSyncedBook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Synced ledger • Room SQLite"
+                            android:textColor="@color/ledger_ink"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="monospace"
+                            android:text="Black = Finished | Pink = Reading now | White = Open slot"
+                            android:textColor="@color/ledger_muted"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -302,7 +586,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
 
     <TextView
         android:id="@+id/tvStatusMessage"
@@ -319,9 +603,9 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
 
-    <!-- Bottom Ink-Black Ledger Bar (Matches Ekran Alıntısı1-6) -->
+    <!-- Bottom Ink-Black Ledger Bar -->
     <LinearLayout
         android:id="@+id/bottomLedgerBar"
         android:layout_width="0dp"
