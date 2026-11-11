@@ -5,15 +5,367 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ledger_paper"
+    android:fitsSystemWindows="true"
+    android:paddingTop="24dp"
     tools:context=".MainActivity">
 
+    <!-- Top Archival Index Subtitle -->
     <TextView
+        android:id="@+id/tvIndexSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:fontFamily="monospace"
+        android:letterSpacing="0.08"
+        android:text="SHELF • 2026 INDEX"
+        android:textColor="@color/ledger_muted"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvActiveSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="monospace"
+        android:gravity="end"
+        android:text="0 active\n0 finished"
+        android:textColor="@color/ledger_muted"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Main Bold Ledger Header -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="monospace"
+        android:text="READING NOW"
+        android:textColor="@color/ledger_ink"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvActiveSummary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIndexSubtitle" />
+
+    <!-- 3-Box Ledger Metric Strip (Matches Ekran Alıntısı6) -->
+    <LinearLayout
+        android:id="@+id/statsStrip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader">
+
+        <!-- Stat Box 1: Current Page -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tvStatPages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="0 / 0"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="monospace"
+                    android:text="Current page"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Stat Box 2: Active Count / Streak -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tvStatStreak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="0 BOOKS"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="monospace"
+                    android:text="Filed in log"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Stat Box 3: Year Challenge (7 / 12) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tvStatChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="0 / 12"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="monospace"
+                    android:text="Year challenge"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- Archival Catalog Search Bar -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/searchCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/ledger_card_bg"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/ledger_ink"
+        app:strokeWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsStrip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <EditText
+                android:id="@+id/etSearchQuery"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:fontFamily="monospace"
+                android:hint="QUERY CATALOG (e.g. DUNE)..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/ledger_ink"
+                android:textColorHint="@color/ledger_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/ledger_accent"
+                android:fontFamily="monospace"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="FIND"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Mode Switch Strip: SHELF vs CATALOG -->
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchCard">
+
+        <TextView
+            android:id="@+id/btnShowLibrary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_ink"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="7dp"
+            android:text="INDEX SHELF (0)"
+            android:textColor="@color/ledger_paper"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnShowSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@color/ledger_border"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingVertical="7dp"
+            android:text="API CATALOG"
+            android:textColor="@color/ledger_ink"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 2-Column Archival Card Grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBooks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="11dp"
+        android:layout_marginTop="6dp"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/ledger_accent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+
+    <TextView
+        android:id="@+id/tvStatusMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="[ + NEXT READ ]\nOPEN RULED SLOT\n\nQuery the catalog above to file your first book."
+        android:textColor="@color/ledger_muted"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabContainer" />
+
+    <!-- Bottom Ink-Black Ledger Bar (Matches Ekran Alıntısı1-6) -->
+    <LinearLayout
+        android:id="@+id/bottomLedgerBar"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/ledger_ink"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="#2C2C2A"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="⌗"
+            android:textColor="@color/ledger_paper"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvBottomBarStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="Shelf • Reading now"
+            android:textColor="@color/ledger_paper"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvBottomBarJump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="JUMP TO →"
+            android:textColor="@color/ledger_accent"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

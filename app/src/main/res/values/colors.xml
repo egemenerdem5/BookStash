@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Archival Ledger Palette -->
+    <color name="ledger_paper">#F5F2EB</color>
+    <color name="ledger_card_bg">#FAF8F3</color>
+    <color name="ledger_ink">#141413</color>
+    <color name="ledger_muted">#7A756C</color>
+    <color name="ledger_border">#D5CFC2</color>
+    <color name="ledger_accent">#E93B81</color>
+    <color name="ledger_accent_dark">#C82869</color>
 </resources>

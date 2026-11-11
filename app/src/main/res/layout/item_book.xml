@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardBook"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/ledger_card_bg"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/ledger_ink"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="205dp">
+
+        <!-- Left Binder Strip with 3 Punch Holes -->
+        <LinearLayout
+            android:id="@+id/binderStrip"
+            android:layout_width="18dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/hole1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="○"
+                android:textColor="@color/ledger_muted"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/hole2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:text="○"
+                android:textColor="@color/ledger_muted"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/hole3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:text="○"
+                android:textColor="@color/ledger_muted"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dividerSpine"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/ledger_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/binderStrip"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Top Index Header Row -->
+        <TextView
+            android:id="@+id/tvCatalogCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:maxLines="1"
+            android:text="A-01 / RECORD"
+            android:textAllCaps="true"
+            android:textColor="@color/ledger_muted"
+            android:textSize="9sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvStatusBadge"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvStatusBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/ledger_ink"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
+            android:text="FILED"
+            android:textAllCaps="true"
+            android:textColor="@color/ledger_paper"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerTop"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/ledger_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine"
+            app:layout_constraintTop_toBottomOf="@+id/tvCatalogCode" />
+
+        <!-- Center Content Area: Book Title + Cover Stamp -->
+        <TextView
+            android:id="@+id/tvBookTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="6dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="3"
+            android:text="THE ATLAS OF SMALL HOURS"
+            android:textAllCaps="true"
+            android:textColor="@color/ledger_ink"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookCover"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine"
+            app:layout_constraintTop_toBottomOf="@+id/dividerTop" />
+
+        <TextView
+            android:id="@+id/tvBookAuthors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:maxLines="2"
+            android:text="Author Name"
+            android:textColor="@color/ledger_muted"
+            android:textSize="9sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookCover"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+
+        <ImageView
+            android:id="@+id/ivBookCover"
+            android:layout_width="48dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/ledger_border"
+            android:contentDescription="Book Cover"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerTop" />
+
+        <!-- Bottom Ledger Footer -->
+        <View
+            android:id="@+id/dividerBottom"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginBottom="34dp"
+            android:background="@color/ledger_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine" />
+
+        <TextView
+            android:id="@+id/tvBookMeta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:maxLines="1"
+            android:text="214 / 401"
+            android:textColor="@color/ledger_ink"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAction"
+            app:layout_constraintStart_toEndOf="@+id/dividerSpine"
+            app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
+
+        <TextView
+            android:id="@+id/btnAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@color/ledger_ink"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="3dp"
+            android:text="LOG +"
+            android:textAllCaps="true"
+            android:textColor="@color/ledger_paper"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
