@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     android:background="@color/ledger_paper"
     android:fitsSystemWindows="true"
-    android:paddingTop="16dp"
+    android:paddingTop="14dp"
     tools:context=".MainActivity">
 
-    <!-- Top Archival Index Subtitle -->
+    <!-- Top Archival Index Subtitle (Left) & Contextual Metadata (Right) -->
     <TextView
         android:id="@+id/tvIndexSubtitle"
         android:layout_width="wrap_content"
@@ -53,349 +53,582 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvIndexSubtitle" />
 
-    <!-- 3-Box Ledger Metric Strip -->
+    <!-- ========================================================================= -->
+    <!-- SCREEN 1: READING NOW (3-Box Strip + 2-Column Index Shelf Grid)           -->
+    <!-- Matches Ekran Alıntısı6_2.jpg                                             -->
+    <!-- ========================================================================= -->
     <LinearLayout
-        android:id="@+id/statsStrip"
+        android:id="@+id/readingNowContainer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeader">
 
-        <!-- Stat Box 1: Current Page -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardStatPage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="@color/ledger_card_bg"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/ledger_border"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/tvStatPages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="0 / 0"
-                    android:textColor="@color/ledger_ink"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="monospace"
-                    android:text="Current page"
-                    android:textColor="@color/ledger_muted"
-                    android:textSize="9sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Stat Box 2: Filed Count -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardStatStreak"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="@color/ledger_card_bg"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/ledger_border"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/tvStatStreak"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="0 FILED"
-                    android:textColor="@color/ledger_ink"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="monospace"
-                    android:text="Filed in log"
-                    android:textColor="@color/ledger_muted"
-                    android:textSize="9sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Stat Box 3: Year Challenge (Tap to open BOOK CHALLENGE screen!) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardStatChallenge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="@color/ledger_card_bg"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/ledger_accent"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/tvStatChallenge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="0 / 12"
-                    android:textColor="@color/ledger_ink"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="monospace"
-                    android:text="Year challenge ↗"
-                    android:textColor="@color/ledger_accent"
-                    android:textSize="9sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-
-    <!-- Archival Catalog Search Bar -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/searchCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@color/ledger_card_bg"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="0dp"
-        app:strokeColor="@color/ledger_ink"
-        app:strokeWidth="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statsStrip">
-
+        <!-- 3-Box Ledger Metric Strip (ONLY visible on READING NOW!) -->
         <LinearLayout
+            android:id="@+id/statsStrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="4dp">
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/etSearchQuery"
+            <!-- Stat Box 1: Current Page (Tap -> LOG PAGE) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatPage"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:fontFamily="monospace"
-                android:hint="QUERY CATALOG (e.g. DUNE)..."
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingHorizontal="8dp"
-                android:textColor="@color/ledger_ink"
-                android:textColorHint="@color/ledger_muted"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/ledger_accent"
-                android:fontFamily="monospace"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="7dp"
-                android:text="FIND"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/tvStatPages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="0 / 0"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="monospace"
+                        android:text="Current page"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Stat Box 2: Reading Streak (Tap -> READING DAY) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatStreak"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/tvStatStreak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="18 DAYS"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="monospace"
+                        android:text="Reading streak"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Stat Box 3: Year Challenge (Tap -> BOOK CHALLENGE) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatChallenge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/tvStatChallenge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="0 / 12"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="monospace"
+                        android:text="Year challenge"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-    <!-- Mode Switch Strip: SHELF vs CATALOG vs CHALLENGE -->
-    <LinearLayout
-        android:id="@+id/tabContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchCard">
+        <!-- Collapsible Catalog Search Drawer (Only visible when adding a book via + NEXT READ) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/ledger_ink"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/etSearchQuery"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="monospace"
+                    android:hint="QUERY CATALOG (e.g. DUNE)..."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:paddingHorizontal="8dp"
+                    android:textColor="@color/ledger_ink"
+                    android:textColorHint="@color/ledger_muted"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ledger_accent"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="7dp"
+                    android:text="FIND"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnCloseSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:background="@color/ledger_ink"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="7dp"
+                    android:text="✕"
+                    android:textColor="@color/ledger_paper"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:indeterminateTint="@color/ledger_accent"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/btnShowLibrary"
-            android:layout_width="0dp"
+            android:id="@+id/tvStatusMessage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_ink"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="monospace"
             android:gravity="center"
-            android:paddingVertical="7dp"
-            android:text="SHELF (0)"
-            android:textColor="@color/ledger_paper"
-            android:textSize="10sp"
-            android:textStyle="bold" />
+            android:lineSpacingExtra="4dp"
+            android:text=""
+            android:textColor="@color/ledger_muted"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/btnShowSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="3dp"
+        <!-- 2-Column Archival Index Card Grid -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBooks"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="11dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:background="@color/ledger_border"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="7dp"
-            android:text="API CATALOG"
-            android:textColor="@color/ledger_ink"
-            android:textSize="10sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btnShowChallenge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_border"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="7dp"
-            android:text="CHALLENGE"
-            android:textColor="@color/ledger_ink"
-            android:textSize="10sp"
-            android:textStyle="bold" />
+            android:clipToPadding="false"
+            android:paddingBottom="8dp" />
     </LinearLayout>
 
-    <!-- Library Status Filter Tabs (Row 7 of Notion Task List: All / Reading / Queued / Filed) -->
-    <LinearLayout
-        android:id="@+id/statusFilterContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabContainer">
-
-        <TextView
-            android:id="@+id/chipAll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_accent"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="4dp"
-            android:text="ALL"
-            android:textColor="@color/white"
-            android:textSize="9sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/chipReading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_card_bg"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="4dp"
-            android:text="READING"
-            android:textColor="@color/ledger_ink"
-            android:textSize="9sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/chipWishlist"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_card_bg"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="4dp"
-            android:text="QUEUED"
-            android:textColor="@color/ledger_ink"
-            android:textSize="9sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/chipFinished"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_weight="1"
-            android:background="@color/ledger_card_bg"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:paddingVertical="4dp"
-            android:text="FILED"
-            android:textColor="@color/ledger_ink"
-            android:textSize="9sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- 2-Column Archival Card Grid -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBooks"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="11dp"
-        android:layout_marginTop="6dp"
-        android:clipToPadding="false"
-        android:paddingBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
-
-    <!-- BOOK CHALLENGE VIEW (Matches Ekran Alıntısı4_2.jpg!) -->
-    <ScrollView
-        android:id="@+id/challengeContainer"
+    <!-- ========================================================================= -->
+    <!-- SCREEN 2: LOG PAGE VIEW (Exact match to Ekran Alıntısı2_3.jpg!)            -->
+    <!-- ========================================================================= -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logPageContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabContainer">
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader">
+
+        <!-- Top Book Cover + PAGE X OF Y + Pink Percentage Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLogTop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <!-- Pink Spine + Dark Book Cover Stamp (Matches Ekran Alıntısı2_3.jpg) -->
+                <LinearLayout
+                    android:layout_width="96dp"
+                    android:layout_height="136dp"
+                    android:background="@color/ledger_ink"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/ledger_accent" />
+
+                    <ImageView
+                        android:id="@+id/ivLogBookCover"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="Active Book Cover"
+                        android:padding="6dp"
+                        android:scaleType="centerCrop" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvLogBookTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="monospace"
+                        android:maxLines="1"
+                        android:text="THE ATLAS OF SMALL HOURS"
+                        android:textAllCaps="true"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/tvLogPageFraction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="monospace"
+                        android:lineSpacingExtra="2dp"
+                        android:text="PAGE 181\nOF 401"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLogPagePercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="monospace"
+                        android:text="45.1%"
+                        android:textColor="@color/ledger_accent"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="6dp"
+                        android:background="@color/ledger_border" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:lineSpacingExtra="2dp"
+                        android:text="Page number is the source of truth.\nProgress is derived."
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="8sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 10-Tick Visual Page Strip Card (PAGE STRIP • 10 MAJOR TICKS) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLogStrip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardLogTop"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="PAGE STRIP • 10 MAJOR TICKS"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/tvStripMaxPage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="401"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/pageStrip10Container"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/ledger_border"
+                    android:orientation="horizontal"
+                    android:padding="1dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/dividerLogSession"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/ledger_ink"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardLogStrip" />
+
+        <!-- Session Info Block ("34 min tonight" + SESSION stamp box) -->
+        <LinearLayout
+            android:id="@+id/sessionBlock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerLogSession">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSessionSummaryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="34 min tonight"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSessionLastLogged"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:text="+9 min over goal • est. 5 sessions left\nLast logged page 181"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnMarkFinishedDirect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_ink"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="6dp"
+                    android:text="SESSION\nFILE DONE"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="8sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Bottom Pinned Controls: [-1] [+1] [ Log page • 214 ] (Matches Ekran Alıntısı2_3.jpg!) -->
+        <LinearLayout
+            android:id="@+id/logBottomControls"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnStepMinus1"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_ink"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="-1"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnStepPlus1"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_ink"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="+1"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/btnLogPageCommit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@color/ledger_accent"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="Log page • 181"
+                android:textColor="@color/ledger_ink"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ========================================================================= -->
+    <!-- SCREEN 3: KEEP THE LINE VIEW (Exact match to Ekran Alıntısı5_2.jpg!)       -->
+    <!-- ========================================================================= -->
+    <ScrollView
+        android:id="@+id/keepTheLineContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -403,7 +636,7 @@
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
-            <!-- Top Dial & Big Ratio Row (7 / 12 • 58.3%) -->
+            <!-- Top Featured Ruled Quote Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -416,112 +649,390 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Circular Stamp Dial -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="104dp"
-                        android:layout_height="104dp"
-                        app:cardBackgroundColor="@color/ledger_paper"
-                        app:cardCornerRadius="52dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/ledger_ink"
-                        app:strokeWidth="2dp">
+                    <TextView
+                        android:id="@+id/tvFeaturedQuoteText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:lineSpacingExtra="4dp"
+                        android:text="&quot;Stories are a\nrehearsal for\nfeeling.&quot;"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="8dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/ledger_border" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="monospace"
-                                android:text="2026 INDEX"
-                                android:textColor="@color/ledger_muted"
-                                android:textSize="8sp" />
+                    <TextView
+                        android:id="@+id/tvFeaturedQuoteBook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="monospace"
+                        android:text="The Atlas of Small Hours • p. 214"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="monospace"
-                                android:gravity="center"
-                                android:text="BOOK\nLEDGER"
-                                android:textColor="@color/ledger_ink"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ledger_border" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginTop="12dp"
+                        android:gravity="end"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvChallengeBigFraction"
+                            android:id="@+id/tvSavedBadgePage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="#F5C2D7"
                             android:fontFamily="monospace"
-                            android:text="0 / 12"
-                            android:textColor="@color/ledger_ink"
-                            android:textSize="28sp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:text="SAVED • P. 214"
+                            android:textColor="@color/ledger_accent_dark"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvChallengePercent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="monospace"
-                            android:text="0.0%"
-                            android:textColor="@color/ledger_accent"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:fontFamily="monospace"
-                            android:text="ONE TICK PER BOOK\nFILED IN ROOM DB"
-                            android:textColor="@color/ledger_muted"
-                            android:textSize="9sp" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 12-Book Visual Grid Container (2 rows x 6 slots like Ekran Alıntısı4_2.jpg) -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- READER NOTE Box with Left Ink-Black Bar (Matches Ekran Alıntısı5_2.jpg) -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/ledger_card_bg"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/ledger_ink"
-                app:strokeWidth="1dp">
+                android:layout_marginTop="14dp"
+                android:background="@color/ledger_card_bg"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/ledger_ink" />
 
                 <LinearLayout
-                    android:id="@+id/bookGrid12Container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:padding="12dp">
 
-            <!-- Synced Finish Banner -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="READER NOTE"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
+
+                    <EditText
+                        android:id="@+id/etQuoteInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@null"
+                        android:fontFamily="monospace"
+                        android:hint="Type quote line here..."
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/ledger_ink"
+                        android:textColorHint="@color/ledger_muted"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="6dp"
+                        android:background="@color/ledger_border" />
+
+                    <EditText
+                        android:id="@+id/etReaderNoteInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="monospace"
+                        android:hint="The narrator finally stops defending the choice."
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/ledger_ink"
+                        android:textColorHint="@color/ledger_muted"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tag Pills (#character | #turning-point | #reread) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tagCharacter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/ledger_ink"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="#character"
+                    android:textColor="@color/ledger_paper"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tagTurningPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/ledger_card_bg"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="#turning-point"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tagReread"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ledger_card_bg"
+                    android:fontFamily="monospace"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="#reread"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <!-- Pink Save Quote Button -->
+            <TextView
+                android:id="@+id/btnSaveQuote"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/ledger_accent"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="Save quote • page 214"
+                android:textColor="@color/ledger_ink"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Saved Notes List -->
+            <TextView
+                android:id="@+id/tvSavedNotesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="monospace"
+                android:text=""
+                android:textColor="@color/ledger_muted"
+                android:textSize="9sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/savedNotesListContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ========================================================================= -->
+    <!-- SCREEN 4: BOOK CHALLENGE VIEW (Exact match to Ekran Alıntısı4_2.jpg!)      -->
+    <!-- ========================================================================= -->
+    <ScrollView
+        android:id="@+id/challengeContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    app:cardBackgroundColor="@color/ledger_paper"
+                    app:cardCornerRadius="56dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/ledger_ink"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="2026 INDEX"
+                            android:textColor="@color/ledger_muted"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="monospace"
+                            android:gravity="center"
+                            android:text="BOOK LEDGER"
+                            android:textColor="@color/ledger_ink"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvChallengeBigFraction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="7 / 12"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvChallengePercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="monospace"
+                        android:text="58.3%"
+                        android:textColor="@color/ledger_accent"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="monospace"
+                        android:text="ONE TICK PER BOOK\nNOT PAGE PROGRESS"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="8sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/ledger_ink" />
+
+            <LinearLayout
+                android:id="@+id/bookGrid12Container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/ledger_ink" />
+
+            <!-- Synced Finish Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@color/ledger_accent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="+1"
+                    android:textColor="@color/ledger_ink"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvLatestSyncedBook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="Synced finish • Paper Suns"
+                        android:textColor="@color/ledger_ink"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="monospace"
+                        android:text="Challenge updated honestly from completed title"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="8sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="7TH BOOK"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <!-- Year Goal Footer Box (Matches bottom of Ekran Alıntısı4_2.jpg) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="18dp"
                 app:cardBackgroundColor="@color/ledger_card_bg"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="0dp"
@@ -535,30 +1046,17 @@
                     android:orientation="horizontal"
                     android:padding="12dp">
 
-                    <TextView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@color/ledger_accent"
-                        android:fontFamily="monospace"
-                        android:gravity="center"
-                        android:text="+1"
-                        android:textColor="@color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvLatestSyncedBook"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="monospace"
-                            android:text="Synced ledger • Room SQLite"
+                            android:text="Year goal • 12 books"
                             android:textColor="@color/ledger_ink"
                             android:textSize="11sp"
                             android:textStyle="bold" />
@@ -568,44 +1066,42 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="monospace"
-                            android:text="Black = Finished | Pink = Reading now | White = Open slot"
+                            android:text="Likely finish Oct 19"
                             android:textColor="@color/ledger_muted"
                             android:textSize="9sp" />
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="EDIT →"
+                        android:textColor="@color/ledger_muted"
+                        android:textSize="9sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/ledger_accent"
+    <!-- ========================================================================= -->
+    <!-- SCREEN 5: READING DAY VIEW (Included from view_reading_day.xml!)          -->
+    <!-- ========================================================================= -->
+    <include
+        android:id="@+id/readingDayPanel"
+        layout="@layout/view_reading_day"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
 
-    <TextView
-        android:id="@+id/tvStatusMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:text="[ + NEXT READ ]\nOPEN RULED SLOT\n\nQuery the catalog above to file your first book."
-        android:textColor="@color/ledger_muted"
-        android:textSize="12sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/bottomLedgerBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusFilterContainer" />
-
-    <!-- Bottom Ink-Black Ledger Bar -->
+    <!-- ========================================================================= -->
+    <!-- PERSISTENT BOTTOM INK-BLACK LEDGER BAR (Matches all 5 Reference Screens!) -->
+    <!-- ========================================================================= -->
     <LinearLayout
         android:id="@+id/bottomLedgerBar"
         android:layout_width="0dp"
@@ -621,6 +1117,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/btnBottomIndexIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="#2C2C2A"
@@ -639,16 +1136,17 @@
             android:gravity="center"
             android:text="Shelf • Reading now"
             android:textColor="@color/ledger_paper"
-            android:textSize="11sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tvBottomBarJump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:paddingVertical="6dp"
             android:text="JUMP TO →"
-            android:textColor="@color/ledger_accent"
-            android:textSize="10sp"
+            android:textColor="@color/ledger_muted"
+            android:textSize="9sp"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.egemenerdem.bookstash.ui
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -15,10 +16,11 @@ data class BookUiRow(
     val statusBadge: String,
     val title: String,
     val authors: String,
-    val metaText: String,
+    val metaLeft: String,
+    val metaRight: String,
     val coverUrl: String?,
     val isHighlightedPink: Boolean,
-    val actionLabel: String,
+    val isNextReadSlot: Boolean = false,
     val onCardClick: () -> Unit,
     val onActionClick: () -> Unit
 )
@@ -39,13 +41,14 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                 BookUiRow(
                     id = item.id,
                     catalogCode = code,
-                    statusBadge = "CATALOG",
+                    statusBadge = "+ FILE",
                     title = info?.title ?: "Unknown Title",
                     authors = info?.authors?.joinToString(", ") ?: "Unknown Author",
-                    metaText = "${info?.pageCount ?: 0} pages",
+                    metaLeft = "${info?.pageCount ?: 0} pages",
+                    metaRight = "TAP TO FILE",
                     coverUrl = info?.imageLinks?.httpsThumbnail,
                     isHighlightedPink = false,
-                    actionLabel = "+ FILE",
+                    isNextReadSlot = false,
                     onCardClick = { onSaveClick(item) },
                     onActionClick = { onSaveClick(item) }
                 )
@@ -57,13 +60,14 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     fun submitSavedBooks(
         books: List<BookEntity>,
         onBookClick: (BookEntity) -> Unit,
-        onDeleteClick: (BookEntity) -> Unit
+        onDeleteLongClick: (BookEntity) -> Unit,
+        onNextReadClick: () -> Unit
     ) {
         items.clear()
         items.addAll(
             books.mapIndexed { index, book ->
                 val isReading = book.status == "READING"
-                val code = "A-${(index + 1).toString().padStart(2, '0')} / LOG"
+                val code = "A-${(index + 1).toString().padStart(2, '0')} / BOOK"
                 val badge = when (book.status) {
                     "READING" -> "READING"
                     "FINISHED" -> "FILED"
@@ -71,10 +75,13 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                 }
                 val percent = if (book.pageCount > 0) {
                     val p = (book.currentPage.toFloat() / book.pageCount.toFloat() * 100f)
-                    String.format("%.0f%%", p.coerceIn(0f, 100f))
+                    String.format("%.1f%%", p.coerceIn(0f, 100f))
                 } else {
-                    "0%"
+                    "0.0%"
                 }
+
+                val leftMeta = if (book.status == "FINISHED") "Finished" else "${book.currentPage} / ${book.pageCount}"
+                val rightMeta = if (book.status == "FINISHED") "Filed" else percent
 
                 BookUiRow(
                     id = book.id,
@@ -82,14 +89,33 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                     statusBadge = badge,
                     title = book.title,
                     authors = book.authors,
-                    metaText = "${book.currentPage}/${book.pageCount} • $percent",
+                    metaLeft = leftMeta,
+                    metaRight = rightMeta,
                     coverUrl = book.coverUrl,
                     isHighlightedPink = isReading,
-                    actionLabel = "DEL",
+                    isNextReadSlot = false,
                     onCardClick = { onBookClick(book) },
-                    onActionClick = { onDeleteClick(book) }
+                    onActionClick = { onDeleteLongClick(book) }
                 )
             }
+        )
+
+        // Append the "+ NEXT READ / OPEN RULED SLOT" card at the end of the shelf (Matches Ekran Alıntısı6_2.jpg)
+        items.add(
+            BookUiRow(
+                id = "next_read_slot",
+                catalogCode = "SLOT / OPEN",
+                statusBadge = "+",
+                title = "+\nNEXT READ",
+                authors = "OPEN RULED SLOT",
+                metaLeft = "Catalog search",
+                metaRight = "→",
+                coverUrl = null,
+                isHighlightedPink = false,
+                isNextReadSlot = true,
+                onCardClick = onNextReadClick,
+                onActionClick = onNextReadClick
+            )
         )
         notifyDataSetChanged()
     }
@@ -117,41 +143,74 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
             binding.tvStatusBadge.text = row.statusBadge
             binding.tvBookTitle.text = row.title
             binding.tvBookAuthors.text = row.authors
-            binding.tvBookMeta.text = row.metaText
-            binding.btnAction.text = row.actionLabel
+            binding.tvBookMeta.text = row.metaLeft
+            binding.btnAction.text = row.metaRight
 
-            // Apply Pink Active Card theme (like "THE ATLAS OF SMALL HOURS" in Ekran Alıntısı6)
-            if (row.isHighlightedPink) {
+            if (row.isNextReadSlot) {
+                binding.cardBook.setCardBackgroundColor(Color.parseColor("#F5F2EB"))
+                binding.cardBook.strokeColor = Color.parseColor("#7A756C")
+                binding.ivBookCover.visibility = View.GONE
+                binding.tvStatusBadge.visibility = View.GONE
+                binding.tvBookTitle.setTextColor(Color.parseColor("#141413"))
+                binding.tvBookAuthors.setTextColor(Color.parseColor("#7A756C"))
+                binding.tvBookMeta.setTextColor(Color.parseColor("#7A756C"))
+                binding.btnAction.setBackgroundColor(Color.TRANSPARENT)
+                binding.btnAction.setTextColor(Color.parseColor("#141413"))
+                binding.hole1.setTextColor(Color.parseColor("#7A756C"))
+                binding.hole2.setTextColor(Color.parseColor("#7A756C"))
+                binding.hole3.setTextColor(Color.parseColor("#7A756C"))
+            } else if (row.isHighlightedPink) {
+                // Active Reading Card: Pink outer card with ink-black inner block (Matches Ekran Alıntısı6_2.jpg)
                 binding.cardBook.setCardBackgroundColor(Color.parseColor("#E93B81"))
+                binding.cardBook.strokeColor = Color.parseColor("#141413")
+                binding.ivBookCover.visibility = View.VISIBLE
+                binding.tvStatusBadge.visibility = View.VISIBLE
+                binding.tvStatusBadge.setBackgroundColor(Color.parseColor("#141413"))
+                binding.tvStatusBadge.setTextColor(Color.parseColor("#FAF8F3"))
                 binding.tvCatalogCode.setTextColor(Color.parseColor("#141413"))
                 binding.tvBookTitle.setTextColor(Color.parseColor("#FAF8F3"))
                 binding.tvBookAuthors.setTextColor(Color.parseColor("#141413"))
                 binding.tvBookMeta.setTextColor(Color.parseColor("#141413"))
+                binding.btnAction.setBackgroundColor(Color.TRANSPARENT)
+                binding.btnAction.setTextColor(Color.parseColor("#141413"))
                 binding.hole1.setTextColor(Color.parseColor("#FAF8F3"))
                 binding.hole2.setTextColor(Color.parseColor("#FAF8F3"))
                 binding.hole3.setTextColor(Color.parseColor("#FAF8F3"))
             } else {
+                // Filed / Queued White Archival Card
                 binding.cardBook.setCardBackgroundColor(Color.parseColor("#FAF8F3"))
+                binding.cardBook.strokeColor = Color.parseColor("#D5CFC2")
+                binding.ivBookCover.visibility = View.VISIBLE
+                binding.tvStatusBadge.visibility = View.VISIBLE
+                binding.tvStatusBadge.setBackgroundColor(
+                    if (row.statusBadge == "FILED" || row.statusBadge == "+ FILE") Color.parseColor("#141413")
+                    else Color.parseColor("#EDEAE2")
+                )
+                binding.tvStatusBadge.setTextColor(
+                    if (row.statusBadge == "FILED" || row.statusBadge == "+ FILE") Color.parseColor("#FAF8F3")
+                    else Color.parseColor("#141413")
+                )
                 binding.tvCatalogCode.setTextColor(Color.parseColor("#7A756C"))
                 binding.tvBookTitle.setTextColor(Color.parseColor("#141413"))
                 binding.tvBookAuthors.setTextColor(Color.parseColor("#7A756C"))
-                binding.tvBookMeta.setTextColor(Color.parseColor("#141413"))
+                binding.tvBookMeta.setTextColor(Color.parseColor("#7A756C"))
+                binding.btnAction.setBackgroundColor(Color.TRANSPARENT)
+                binding.btnAction.setTextColor(Color.parseColor("#7A756C"))
                 binding.hole1.setTextColor(Color.parseColor("#7A756C"))
                 binding.hole2.setTextColor(Color.parseColor("#7A756C"))
                 binding.hole3.setTextColor(Color.parseColor("#7A756C"))
             }
 
-            binding.ivBookCover.load(row.coverUrl) {
-                crossfade(true)
+            if (!row.isNextReadSlot) {
+                binding.ivBookCover.load(row.coverUrl) { crossfade(true) }
             }
 
-            binding.root.setOnClickListener {
-                row.onCardClick()
-            }
-
-            binding.btnAction.setOnClickListener {
+            binding.root.setOnClickListener { row.onCardClick() }
+            binding.root.setOnLongClickListener {
                 row.onActionClick()
+                true
             }
+            binding.btnAction.setOnClickListener { row.onActionClick() }
         }
     }
 }

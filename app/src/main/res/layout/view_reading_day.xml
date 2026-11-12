@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <!-- Two Large Ink-Black Blocks: 18 DAYS & 34 / 25 MIN (Matches Ekran Alıntısı3_2.jpg) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@color/ledger_ink"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="STREAK"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tvStreakDaysBig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:gravity="center_vertical"
+                    android:text="18"
+                    android:textColor="@color/ledger_paper"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="DAYS"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardReadingTimerToggle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@color/ledger_ink"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvTimerGoalLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="DAILY GOAL • TAP +5M"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tvDailyMinutesBig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:gravity="center_vertical"
+                    android:text="34 / 25"
+                    android:textColor="@color/ledger_paper"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="MIN"
+                    android:textColor="@color/ledger_muted"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/ledger_ink" />
+
+        <!-- 7-Day Week Strip (M T W T F S S / 12 13 14 15 16 17 18) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="M" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="T" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="W" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="T" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="F" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="S" android:textColor="@color/ledger_muted" android:textSize="9sp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="monospace" android:gravity="center" android:text="S" android:textColor="@color/ledger_accent" android:textSize="9sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginEnd="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="12" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginHorizontal="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="13" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginHorizontal="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="14" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginHorizontal="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="15" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginHorizontal="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="16" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginHorizontal="3dp" android:layout_weight="1" android:background="@color/ledger_ink" android:fontFamily="monospace" android:gravity="center" android:text="17" android:textColor="@color/ledger_paper" android:textSize="11sp" />
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginStart="3dp" android:layout_weight="1" android:background="@color/ledger_accent" android:fontFamily="monospace" android:gravity="center" android:text="18" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Ruled Archival Session Sheet (Page 181 -> 214) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardSessionJumpToLog"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/ledger_card_bg"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/ledger_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ledger_border" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="28dp" android:background="@color/ledger_border" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvReadingDaySessionPages"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Page 0 → 100"
+                            android:textColor="@color/ledger_ink"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvReadingDaySessionBook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="monospace"
+                            android:text="34 min • Active Record"
+                            android:textColor="@color/ledger_muted"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="→"
+                        android:textColor="@color/ledger_accent"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="16dp" android:background="@color/ledger_border" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="28dp" android:background="@color/ledger_border" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom 3 Metric Boxes (+9 min over goal | 482 min this month | 31 longest streak) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+                    <TextView android:id="@+id/tvStatOverGoal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="monospace" android:text="+9" android:textColor="@color/ledger_ink" android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:fontFamily="monospace" android:text="min over goal" android:textColor="@color/ledger_muted" android:textSize="8sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+                    <TextView android:id="@+id/tvStatMonthMinutes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="monospace" android:text="482" android:textColor="@color/ledger_ink" android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:fontFamily="monospace" android:text="min this month" android:textColor="@color/ledger_muted" android:textSize="8sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/ledger_card_bg"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/ledger_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="monospace" android:text="31" android:textColor="@color/ledger_ink" android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:fontFamily="monospace" android:text="longest streak" android:textColor="@color/ledger_muted" android:textSize="8sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
